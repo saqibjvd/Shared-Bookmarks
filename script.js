@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // display bookmarks
-  function diplayBookmarks() {
+  function displayBookmarks() {
     if (!currentUserId) return;
 
     let bookmarks = getData(currentUserId);
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     descriptionInput.value = "";
 
     // display the updated list of bookmarks
-    diplayBookmarks()
+    displayBookmarks()
   })
 
 
@@ -133,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!bookmarks) return;
     bookmarks.splice(index, 1);
     setData(currentUserId, bookmarks);
-    diplayBookmarks();
+    displayBookmarks();
   }
 
   displayUsers();
-  diplayBookmarks();
+  displayBookmarks();
 });
