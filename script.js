@@ -6,7 +6,33 @@
 
 import { getUserIds } from "./storage.js";
 
-window.onload = function () {
-  const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
-};
+// window.onload = function () {
+//   const users = getUserIds();
+//   document.querySelector("body").innerText = `There are ${users.length} users`;
+// };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userSelect = document.getElementById("userSelect");
+  const bookmarkList = document.getElementById("bookmarksList");
+  const bookmarkMessage = document.getElementById("bookmarkMessage");
+  const bookmarkForm = document.getElementById("bookmarkForm");
+  const urlInput = document.getElementById("url");
+  const titleInput = document.getElementById("title");
+  const descriptionInput = document.getElementById("description") 
+
+  let currentUserId = null;
+
+  function displayUsers() {
+    const userIds = getUserIds()
+    console.log(userIds, "users")
+    userIds.forEach(userId => {
+      const option = document.createElement("option");
+      option.value = userId;
+      option.textContent = `user: ${userId}`;
+      userSelect.appendChild(option)
+    })
+
+  }
+  
+  displayUsers()
+})
