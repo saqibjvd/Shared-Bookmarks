@@ -18,7 +18,7 @@ export function getUserIds() {
  * @returns {any | null} The data associated with the user
  */
 export function getData(userId) {
-  return JSON.parse(localStorage.getItem(`stored-data-user-${userId}`));
+  return JSON.parse(localStorage.getItem(`stored-data-user-${userId}`));a
 }
 
 /**

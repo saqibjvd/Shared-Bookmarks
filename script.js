@@ -4,13 +4,92 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 
-import { getData, getUserIds, setData } from "./storage.js";
 
-// window.onload = function () {
-//   const users = getUserIds();
-//   document.querySelector("body").innerText = `There are ${users.length} users`;
-// };
 
+// Import necessary functions from the storage module
+import { getData, getUserIds, setData, clearData } from "./storage.js";
+
+// Export the displayBookmarks function for potential use in tests or elsewhere
+export function displayBookmarks() {
+  const userSelect = document.getElementById("userSelect");
+  const bookmarkList = document.getElementById("bookmarksList");
+  const bookmarkMessage = document.getElementById("bookmarkMessage");
+
+  let currentUserId = userSelect.value; // Get the currently selected user
+  if (!currentUserId) return;
+
+  // Get the bookmarks associated with the selected user
+  let bookmarks = getData(currentUserId); // getData comes from storage.js
+  if (!bookmarks) bookmarks = []; // Initialize bookmarks as an empty array if null
+
+  bookmarkList.innerHTML = ""; // Clear previous list of bookmarks
+
+  // Check if there are any bookmarks
+  if (bookmarks.length === 0) {
+    bookmarkMessage.style.display = "block"; // Show the "No bookmarks available" message
+  } else {
+    bookmarkMessage.style.display = "none"; // Hide the "No bookmarks available" message
+    bookmarks.forEach((bookmark, index) => {
+      // Create a list item for each bookmark
+      const listItem = document.createElement("li");
+
+      // Create a title for the bookmark
+      const title = document.createElement("h4");
+      title.textContent = bookmark.title;
+
+      // Create a link for the bookmark URL
+      const titleLink = document.createElement("a");
+      titleLink.href = bookmark.url;
+      titleLink.target = "_blank";
+      titleLink.textContent = bookmark.url;
+
+      // Create a description for the bookmark
+      const description = document.createElement("p");
+      description.textContent = bookmark.description;
+
+      // Display the timestamp when the bookmark was created
+      const timeStamp = document.createElement("small");
+      timeStamp.textContent = `posted at: ${new Date(bookmark.createdAt).toLocaleString()}`;
+
+      // Create a delete button for the bookmark
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.classList.add("delete-button");
+
+      // Append the created elements to the list item
+      listItem.appendChild(title);
+      listItem.appendChild(titleLink);
+      listItem.appendChild(description);
+      listItem.appendChild(timeStamp);
+      listItem.appendChild(deleteButton);
+
+      // Add the list item to the bookmark list
+      bookmarkList.appendChild(listItem);
+
+      // Add the delete functionality for the bookmark
+      deleteButton.addEventListener("click", () =>
+        deleteBookmark(index, bookmark.title)
+      );
+    });
+  }
+}
+
+// Define the deleteBookmark function (it needs to be defined before it's used)
+function deleteBookmark(index, title) {
+  const confirmation = confirm(
+    `Are you sure you want to delete this bookmark titled: ${title}?`
+  );
+  if (confirmation) {
+    const currentUserId = document.getElementById("userSelect").value;
+    let bookmarks = getData(currentUserId);
+    if (!bookmarks) return;
+    bookmarks.splice(index, 1);
+    setData(currentUserId, bookmarks);
+    displayBookmarks(); // Re-render the updated bookmarks
+  }
+}
+
+// Set up event listeners after the DOM content is loaded
 document.addEventListener("DOMContentLoaded", () => {
   const userSelect = document.getElementById("userSelect");
   const bookmarkList = document.getElementById("bookmarksList");
@@ -20,10 +99,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("title");
   const descriptionInput = document.getElementById("description");
 
+  const clearBookmarksBtn = document.getElementById("clearBookmarksBtn");
+
   let currentUserId = null;
 
   function displayUsers() {
     const userIds = getUserIds();
+    userSelect.innerHTML = ""; // Clear previous options
+
     userIds.forEach((userId) => {
       const option = document.createElement("option");
       option.value = userId;
@@ -32,73 +115,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // handle user  selectionchange
+  // Handle user selection change
   userSelect.addEventListener("change", (e) => {
     currentUserId = e.target.value;
-    console.log(currentUserId);
-    diplayBookmarks();
+    displayBookmarks();
   });
 
-  // display bookmarks
-  function displayBookmarks() {
-    if (!currentUserId) return;
-
-    let bookmarks = getData(currentUserId);
-    // If null, initialize as empty array
-    if (!bookmarks) bookmarks = [];
-
-    bookmarkList.innerHTML = "";
-
-    if (bookmarks.length === 0) {
-      bookmarkMessage.style.display = "block";
-    } else {
-      bookmarkMessage.style.display = "none";
-      bookmarks.forEach((bookmark, index) => {
-        // creating li
-        const listItem = document.createElement("li");
-
-        // create title
-        const title = document.createElement("h4");
-        title.textContent = bookmark.title;
-
-        // create link
-        const titleLink = document.createElement("a");
-        titleLink.href = bookmark.url;
-        titleLink.target = "_blank";
-        titleLink.textContent = bookmark.url;
-
-        // create description
-        const description = document.createElement("p");
-        description.textContent = bookmark.description;
-
-        // time stamp
-        const timeStamp = document.createElement("small");
-        timeStamp.textContent = `posted at: ${new Date(
-          bookmark.createdAt
-        ).toLocaleString()}`;
-
-        // delete button
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.style.marginLeft = "10px";
-        deleteButton.classList.add("delete-button");
-
-        // append elements to the list
-        listItem.appendChild(title);
-        listItem.appendChild(titleLink);
-        listItem.appendChild(description);
-        listItem.appendChild(timeStamp);
-        listItem.appendChild(deleteButton);
-
-        bookmarkList.appendChild(listItem);
-
-        deleteButton.addEventListener("click", () => deleteBookmark(index));
-      });
-    }
-  }
-
-
-  // handle form submission
+  // Handle form submission
   bookmarkForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -106,36 +129,42 @@ document.addEventListener("DOMContentLoaded", () => {
       url: urlInput.value,
       title: titleInput.value,
       description: descriptionInput.value,
-      createdAt: Date.now() // current time
-    }
+      createdAt: Date.now(), // current time
+    };
 
     let existingBookmarks = getData(currentUserId);
-    if(!existingBookmarks) existingBookmarks = [];
+    if (!existingBookmarks) existingBookmarks = [];
 
-    // add new bookmark
+    // Add new bookmark
     existingBookmarks.push(newBookmark);
-    setData(currentUserId, existingBookmarks)
+    setData(currentUserId, existingBookmarks);
 
-    // clear input after submit
+    // Clear input fields after submission
     urlInput.value = "";
     titleInput.value = "";
     descriptionInput.value = "";
 
-    // display the updated list of bookmarks
-    displayBookmarks()
-  })
+    urlInput.focus(); // Focus back to URL input
 
-
-
-  // delete single bookmark
-  function deleteBookmark(index) {
-    let bookmarks = getData(currentUserId);
-    if (!bookmarks) return;
-    bookmarks.splice(index, 1);
-    setData(currentUserId, bookmarks);
+    // Display the updated list of bookmarks
     displayBookmarks();
-  }
+  });
 
+  // Clear all bookmarks for the selected user
+  clearBookmarksBtn.addEventListener("click", () => {
+    if (currentUserId) {
+      const confirmation = confirm(
+        "Are you sure you want to clear all bookmarks for this user?"
+      );
+      if (confirmation) {
+        clearData(currentUserId); // Clear all bookmarks for the selected user
+        displayBookmarks(); // Re-display bookmarks (will show "No bookmarks available" if cleared)
+      }
+    } else {
+      alert("Please select a user first!");
+    }
+  });
+
+  // Display users and their bookmarks
   displayUsers();
-  displayBookmarks();
 });

@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# npm log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage reports
+coverage/
+
+# Environment variable files
+.env
+
+# IDE or text editor settings
+.vscode/
+.idea/
+.DS_Store
+
+# Optional: Add any other specific files or folders to ignore

@@ -1,0 +1,153 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 30px;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Dropdown Styling */
+label[for="userSelect"] {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  display: block;
+  color: #555;
+}
+
+select {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: #fff;
+}
+
+/* Form Styling */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.1em;
+  color: #333;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: #fff;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Button Styling */
+button {
+  /* width: 100%; */
+  padding: 12px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#clearBookmarksBtn {
+  background-color: #f44336;
+  margin-top: 20px;
+}
+
+#clearBookmarksBtn:hover {
+  background-color: #e53935;
+}
+
+/* Bookmarks Section */
+#bookmarksSection {
+  margin-top: 30px;
+}
+
+#bookmarkMessage {
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+}
+
+#bookmarksList {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+#bookmarksList li {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+#bookmarksList li a {
+  color: #2196F3;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+#bookmarksList li a:hover {
+  text-decoration: underline;
+}
+
+#bookmarksList li p {
+  margin-top: 10px;
+  color: #555;
+  font-size: 0.95em;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  form, #clearBookmarksBtn {
+    width: 100%;
+  }
+}
