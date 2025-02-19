@@ -73,6 +73,7 @@ form textarea {
 button {
   /* width: 100%; */
   padding: 12px;
+  margin-left: 10px;
   background-color: gray;
   color: white;
   border: none;

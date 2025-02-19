@@ -1,10 +1,3 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
-
-
 
 // Import necessary functions from the storage module
 import { getData, getUserIds, setData, clearData } from "./storage.js";
@@ -19,16 +12,17 @@ export function displayBookmarks() {
   if (!currentUserId) return;
 
   // Get the bookmarks associated with the selected user
-  let bookmarks = getData(currentUserId); // getData comes from storage.js
-  if (!bookmarks) bookmarks = []; // Initialize bookmarks as an empty array if null
+  let bookmarks = getData(currentUserId);
+  if (!bookmarks) bookmarks = []; 
 
-  bookmarkList.innerHTML = ""; // Clear previous list of bookmarks
+  bookmarkList.innerHTML = "";
 
   // Check if there are any bookmarks
   if (bookmarks.length === 0) {
     bookmarkMessage.style.display = "block"; // Show the "No bookmarks available" message
   } else {
     bookmarkMessage.style.display = "none"; // Hide the "No bookmarks available" message
+
     bookmarks.forEach((bookmark, index) => {
       // Create a list item for each bookmark
       const listItem = document.createElement("li");
@@ -157,8 +151,8 @@ document.addEventListener("DOMContentLoaded", () => {
         "Are you sure you want to clear all bookmarks for this user?"
       );
       if (confirmation) {
-        clearData(currentUserId); // Clear all bookmarks for the selected user
-        displayBookmarks(); // Re-display bookmarks (will show "No bookmarks available" if cleared)
+        clearData(currentUserId); 
+        displayBookmarks();
       }
     } else {
       alert("Please select a user first!");
