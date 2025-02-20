@@ -129,9 +129,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let existingBookmarks = getData(currentUserId);
     if (!existingBookmarks) existingBookmarks = [];
 
-    // Add new bookmark
+
+    // Check for duplicates (based on URL)
+  const duplicate = existingBookmarks.some(
+    (bookmark) => bookmark.url === newBookmark.url
+  );
+
+  if (duplicate) {
+    alert("This bookmark already exists for the selected user.");
+  } else {
+    // Add new bookmark if no duplicate is found
     existingBookmarks.push(newBookmark);
     setData(currentUserId, existingBookmarks);
+    alert("Bookmark added successfully!");
+  }
 
     // Clear input fields after submission
     urlInput.value = "";

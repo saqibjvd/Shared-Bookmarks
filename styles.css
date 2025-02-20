@@ -138,6 +138,11 @@ button:hover {
   font-size: 0.95em;
 }
 
+.footer{
+  font-size: x-small;
+  text-align: center;
+}
+
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
   body {
