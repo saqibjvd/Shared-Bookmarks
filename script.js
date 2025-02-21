@@ -17,6 +17,9 @@ export function displayBookmarks() {
 
   bookmarkList.innerHTML = "";
 
+  // Sort the bookmarks in reverse chronological order based on createdAt
+  bookmarks.sort((a, b) => b.createdAt - a.createdAt);
+
   // Check if there are any bookmarks
   if (bookmarks.length === 0) {
     bookmarkMessage.style.display = "block"; // Show the "No bookmarks available" message

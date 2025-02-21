@@ -1,54 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shared Bookmarks</title>
-    <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="styles.css" media="all" />
-    <script type="module" src="script.js" defer></script>
-  </head>
-  <body>
-    <h1>Shared Bookmarks</h1>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Shared Bookmarks</title>
+      <!-- Link to the external CSS file -->
+      <link rel="stylesheet" href="styles.css" media="all" />
+      <script type="module" src="script.js" defer></script>
+    </head>
+    <body>
+      <h1>Shared Bookmarks</h1>
 
-    <!-- Dropdown to select a user -->
-    <label for="userSelect">Select User:</label>
-    <select id="userSelect">
-      <!-- Options will be populated with JavaScript -->
-    </select>
+      <!-- Dropdown to select a user -->
+      <label for="userSelect">Select User:</label>
+      <select id="userSelect">
+        <!-- Options will be populated with JavaScript -->
+      </select>
 
-    <!-- Form to add new bookmark -->
-    <h3>Add New Bookmark</h3>
-    <form id="bookmarkForm">
-      <label for="url">URL:</label>
-      <input type="url" id="url" required />
+      <!-- Form to add new bookmark -->
+      <h3>Add New Bookmark</h3>
+      <form id="bookmarkForm">
+        <label for="url">URL:</label>
+        <input type="url" id="url" required />
 
-      <label for="title">Title:</label>
-      <input type="text" id="title" maxlength="30" required />
+        <label for="title">Title:</label>
+        <input type="text" id="title" maxlength="30" required />
 
-      <label for="description">Description:</label>
-      <textarea id="description" maxlength="100" required></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" maxlength="100" required></textarea>
 
-      <button type="submit">Add Bookmark</button>
-    </form>
+        <button type="submit">Add Bookmark</button>
+      </form>
 
-    <button id="clearBookmarksBtn">Clear All Bookmarks</button>
-    <!-- Section to display bookmarks -->
-    <div id="bookmarksSection">
-      <p id="bookmarkMessage" style="display: none">
-        No bookmarks available for this user.
-      </p>
-      <ul id="bookmarksList">
-        <!-- Bookmarks will be displayed here -->
-      </ul>
-    </div>
-    <div>
-      <footer class="footer">
-        <p>
-          Saqib Javed - London<br />
-          <a href="">link to repo</a>
+      <button id="clearBookmarksBtn">Clear All Bookmarks</button>
+      <!-- Section to display bookmarks -->
+      <div id="bookmarksSection">
+        <p id="bookmarkMessage" style="display: none">
+          No bookmarks available for this user.
         </p>
-      </footer>
-    </div>
-  </body>
-</html>
+        <ul id="bookmarksList">
+          <!-- Bookmarks will be displayed here -->
+        </ul>
+      </div>
+      <div>
+        <footer class="footer">
+          <p>
+            Saqib Javed - London<br />
+            <a href="">link to repo</a>
+          </p>
+        </footer>
+      </div>
+    </body>
+  </html>
